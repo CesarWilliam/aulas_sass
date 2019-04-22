@@ -1,0 +1,110 @@
+@mixin size($altura, $largura, $color) { // mixin é como se fosse uma função em js, ele aceita parâmetros também 
+    height: $altura;
+    width: $largura;
+    background-color: $color;
+}
+
+.classe {
+    @include size(100px, 100px, black);
+}     
+
+// ==============================================================================================================
+
+%center { // placeholder selector. Ele é muito útil para quando você utiliza mais de uma vez o mesmo placeholder, assim não repetindo código (ver css)
+    display: block;
+    margin: 0 auto;
+}
+
+.classe2 { 
+    @extend %center,
+            %u-no-padding-left;
+}
+ 
+.classe3 { 
+    @extend %center;
+}
+
+// ==============================================================================================================
+// Biblioteca de utilitários
+
+%u-bold { font-weight: bold; }
+%u-no-bold {font-weight: normal;}
+%u-italic { font-style: italic; }
+%u-no-italic { font-style: normal; }
+
+%u-text-align-left { text-align: left; }
+%u-text-align-center { text-align: center; } 
+%u-text-align-right { text-align: right; }
+%u-text-align-justify { text-align: justify; }
+
+%u-underline { text-decoration: underline; }
+%u-strike { text-decoration: line-through; }
+%u-no-text-decoration { text-decoration: none; }
+
+%u-uppercase { text-transform: uppercase; }
+%u-capitalize { text-transform: capitalize; }
+%u-no-text-transform { text-transform: none; }
+
+%u-position-absolute { position: absolute; }
+%u-position-relative { position: relative; }
+%u-position-fixed { position: fixed; }
+%u-position-static { position: static; }
+
+
+// Utilização de each
+
+$layout-module-size: 30px;
+$directions: top, right, bottom, left;
+
+@each $direction in $directions { // $direction é um álias, um apelido, onde pega cada elemento que passar no each 
+    %u-no-padding-#{$direction} { padding-#{$direction}: 0; } // esse código cria um %u-no-padding-top, %u-no-padding-right, %u-no-padding-bottom, %u-no-padding-left
+    %u-half-padding-#{$direction} { padding-#{$direction}: $layout-module-size / 2; }
+    %u-default-padding-#{$direction} { padding-#{$direction}: $layout-module-size; }
+    %u-double-padding-#{$direction} { padding-#{$direction}: $layout-module-size * 2; }
+
+    %u-no-margin-#{$direction} { margin-#{$direction}: 0; }
+    %u-half-margin-#{$direction} { margin-#{$direction}: $layout-module-size / 2; }
+    %u-dafault-margin-#{$direction} { margin-#{$direction}: $layout-module-size; }
+    %u-double-margin-#{$direction} { margin-#{$direction}: $layout-module-size * 2; }
+}
+
+body {
+    @extend %u-double-margin-top, 
+            %u-default-padding-right, 
+            %u-half-margin-left, 
+            %u-display-block,
+            %u-flex-direction-row, 
+            %u-flex-wrap-wrap-reverse, 
+            %u-flex-align-item-flex-end,
+            %u-flex-justify-content-flex-end;
+} 
+
+// Utilitários de FlexBox
+
+$displays: flex, block, none;
+$flex-directions: row, column;
+$flex-wraps: wrap, wrap-reverse, nowrap;
+$flex-align-items: center, flex-start, flex-end, stretch, baseline;
+$flex-justify-contents: center, flex-start, flex-end, space-around, space-between;
+
+@each $display in $displays {
+    %u-display-#{$display} { display: #{$display}; }
+}
+
+@each $flex-direction in $flex-directions {
+    %u-flex-direction-#{$flex-direction} { flex-direction: #{$flex-direction}; }
+}
+
+@each $flex-wrap in $flex-wraps {
+    %u-flex-wrap-#{$flex-wrap} { flex-wrap: #{$flex-wrap}; }
+}
+
+@each $flex-align-item in $flex-align-items {
+    %u-flex-align-item-#{$flex-align-item} { align-items: #{$flex-align-item}; }
+}
+
+@each $flex-justify-content in $flex-justify-contents {
+    %u-flex-justify-content-#{$flex-justify-content} { justify-content: #{$flex-justify-content}; }
+}
+
+%u-flex-total-centered { @extend %u-flex-align-item-center, %u-flex-justify-content-center; }

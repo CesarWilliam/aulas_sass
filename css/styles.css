@@ -1,0 +1,35 @@
+.classe {
+  height: 100px;
+  width: 100px;
+  background-color: black; }
+
+.classe2, .classe3 {
+  display: block;
+  margin: 0 auto; }
+
+body {
+  margin-top: 60px; }
+
+body {
+  padding-right: 30px; }
+
+.classe2 {
+  padding-left: 0; }
+
+body {
+  margin-left: 15px; }
+
+body {
+  display: block; }
+
+body {
+  flex-direction: row; }
+
+body {
+  flex-wrap: wrap-reverse; }
+
+body {
+  align-items: flex-end; }
+
+body {
+  justify-content: flex-end; }
