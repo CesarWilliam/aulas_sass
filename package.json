@@ -1,0 +1,24 @@
+{
+  "name": "aulas_sass",
+  "version": "1.0.0",
+  "description": "Aulas SASS",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CesarWilliam/aulas_sass.git"
+  },
+  "author": "William",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CesarWilliam/aulas_sass/issues"
+  },
+  "homepage": "https://github.com/CesarWilliam/aulas_sass#readme",
+  "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "gulp": "^4.0.1",
+    "gulp-sass": "^4.0.2"
+  }
+}
