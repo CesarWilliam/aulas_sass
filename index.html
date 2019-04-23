@@ -12,8 +12,302 @@
 
 </head>
 <body>  
+
+<!-- 
+
+    ================================================== Aulas CSS ==================================================
+
+    Pesos de seletores css - pesos são proridades em relação a algum conflito
+
+    Do mais alto para o mais baixo:
+    - Estilos inline
+    - IDs
+    - Classes, pseudoclasses e atributos
+    - Elementos e pseudoelementos
+
+    Exemplo de calculo de peso no css:
     
-    <div class="classe"></div>
+    h1 => 0, 0, 0, 1 == 0001
+    #content h1 => 0, 1, 0, 1 == 0101
+
+    Resultado == 101 > 1 
+    
+    // ============= 
+
+    Outros exemplos:
+
+    #sidebar ul li a.myclass:hover ==> 0, 1, 2, 3 == 0123
+    li:first-child h2 .title ==> 0, 0, 2, 2 == 0022
+    #nav .selected > a:hover ==> 0, 1, 2, 1 == 0121
+
+    Resultado == 123 > 121 > 22
+
+
+
+    // ================== Eficiência dos Seletores ================== //
+
+    Da ordem do maior pro menor:
+
+    - ID -> #id
+    - Classe -> .class
+    - Tipo -> <div>
+    - Irmão adjacente -> h2 + p
+    - Seletor filho -> li > ul
+    - Seletor descendente -> ul a
+    - Seletor universal -> *
+    - Seletor atributo -> [type="text"]
+    - Pseudo-classe/elemento -> a:hover
+
+    Uma forma inteligente de ler o código CSS para o navegador é a utilização de seletores de forma
+    eficiente. O navegador lê um CSS da direita para e esquerda.
+    
+    Exemplo:
+    #id h2 <-- errado, pois o navegador primeiro olhará todos os h2 do site, depois todos que apresentem o id referente.
+    #id .class-h2 <-- correto, pois o navegador olhará apenas os elementos que contém a classe "class-h2" primeiro, logo após olhará o #id.
+    .class-h2 <-- correto, pois o navegador olhará apenas os elementos que contém a classe "class-h2".
+
+
+
+    // =========================== SMACSS =========================== //
+
+    Sistema de regras e padrões, baseados em 5 regras principais:
+
+    - Base: são regras que não utilizam classes ou IDs, e resetam os estilos dos elementos para criar um padrão para todos navegadores,
+    também criando uma base de estilos. Olhar CSS reset (consiste em sobrepor o padrão de estilo do browser, 
+    criando uma folha de estilos básica para remover toda formatação “original” );
+
+    Exemplos: 
+
+    * { box-sizing: border-box; }
+    ul { list-style: none; }
+    a { text-decoration: none; }
+
+    // =============
+
+    - Layouts: são regras para estruturas maiores do site, como Header, Footer, Sidebar, Aside, dentre outras estruturas grandes.
+    Para essas classes é interessante utilizar o prefixo ".L-";
+
+    Exemplos: 
+
+    .L-header, .L-footer {
+        width: 1160px;    
+        margin: auto;
+    }
+
+    // =============
+
+    - Modules: englobam os demais elementos do site. Não utilizar seletores, apenas classes. Precisam ser independentes e intercambiáveis, como componentes
+
+    Exemplos:
+
+    <button class="btn"></button>
+
+    .btn {
+        background-color: blue;
+        border-radius: 5px;
+        font-size: 16px;
+        color: black;
+    }
+
+    // =============
+
+    - State: regras resposáveis por gerenciar estados de componentes enquanto o usuário estiver navegando. Indicado que a classe possua o prefixo ".is-"
+    Exemplo: ".is-collapsed". também pode ser utilizado o atributo "data" como indicador de estado do elemento.
+    
+    Exemplo: 
+    
+    <div class=".class" data-state="closed">
+    .class[data-state="closed"]
+
+    // =============
+
+    - Theme: conjunto de cores, propriedades, tipografias, imagens, etc, utlizando um padrão para um caso em específico, como perfil de usuários, e dentre outros casos
+
+
+
+    // ============================= BEM ============================= //
+
+    Metodologia de criação de nomes para classes de folhas de estilo.
+
+    - Bloco: entidade intependente que apresenta um significado;
+
+    Exemplo: .search {}
+
+    // =============
+    
+    - Elemento: descendente do bloco, fazendo parte dele e ajudando a formar o mesmo. Utiliza o prefixo "__"
+
+    Exemplo: .search__field {}
+
+    // =============
+    
+    - Elemento: Um estado ou versão diferente de um bloco ou elemento. Utiliza o prefixo "--"
+
+    Exemplo: .search__field--error {}
+
+    // =============
+
+    Utiliza também o "State" de SMACSS
+
+    Exemplo: .block__element--disabled
+
+
+    Obs: No SASS já existe pré configurado as metodologias de BEM
+
+    Exemplo:
+
+    .selector {
+        color: blue;
+
+        &--modifier {
+            color: red;
+        }
+    }
+
+    No css fica dessa forma:
+
+    .selector {
+        color: blue;
+    }
+
+    .selector--modifier {
+        color: red;
+    }
+
+
+
+    // =========================== Mixins =========================== //
+
+    Conjunto de regras que funcionam parecidos com as functions de js, também aceitando parâmetros
+
+    Exemplos:
+
+    @mixin size($altura, $largura, $color) { 
+        height: $altura;
+        width: $largura;
+        background-color: $color;
+    }
+
+    .classe {
+        @include size(100px, 100px, black);
+    }     
+
+
+    @mixin input-placeholder {
+        &.placeholder { @content; }
+        &.-moz-placeholder { @content; }
+    }
+
+    input {
+        @include input-placeholder {
+            color: red;
+        }
+    }
+
+    No css fica assim:
+
+    input:placeholder {
+        color: red;
+    }
+
+    input:-moz-placeholder {
+        color: red;
+    }
+
+
+
+    // ==================== Condicionais no SASS ==================== //
+
+    if, else, while, else if (@if, @else, @while, @else if)
+
+    Exemplos:
+
+    @mixin background ($start-color, $end-color, $orientation) {
+        @if $orientation = "vertical" {
+
+        }
+        @else if $orientarion = "horizontal" {
+            
+        }
+        @else {
+
+        }
+    }
+
+    .class {
+        @include background (blue, black, vertical);
+    }
+
+
+
+    // ================ Extensão/herança - @extend ================= //
+
+    Exemplos:
+
+    .class {
+        color: blue;
+    }
+
+    .class2 {
+        @extend .class;
+    }
+
+    No css fica assim:
+
+    .class, .class2 {
+        color: blue;
+    }
+
+
+
+    // =================== Placeholder selector ==================== //
+
+    Olhar o arquivo placeholder.scss e o placeholder.css
+
+
+
+    // ========================= Importar ========================== //
+
+    Importar folha de estilos dentro de outras.
+
+    Exemplo: @import "styles";
+
+
+
+    // ========================= Partials ========================== //
+
+    _ (underline) - é utilizado para ser importado dentro de um arquivo SASS e não compliado pelo css
+
+    Exemplo:
+
+    Arquivos style.scss
+            _style2.scss
+
+    Agora dar um @import "style2.scss"; no arquivo style.scss e linkar no <head> do html apenas o arquivo style.css
+
+    
+
+    // ====================== NameSpaces CSS ======================= //
+
+    - Utilitários: "u-" são utilizados para regras de responsabilidade única, fazendo apenas uma estilização.
+
+    Exemplo: .u-bold { font-weight: bold; }
+
+    // =============
+
+    - Componentes: "c-" são utilizados para componentes no site, sendo em teoria trocados de páginas sem perder o estilo
+
+    // =============
+
+    - Is/Has: componente referente ao estado do elemento.
+
+    Exemplo: .is-active // .has-active
+
+    // =============
+
+    - Escopo: utilizado para criar regras em elementos criados automaticamentes. Elementos genéricos como posts, sections e etc.
+
+--> 
 
 </body>  
 </html> 
