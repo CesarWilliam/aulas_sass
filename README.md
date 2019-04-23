@@ -1,4 +1,4 @@
-# aulas_sass
+# Aulas Css e SASS
 Estudos sobre css e sass:
 
 - Eficiência de seletores
