@@ -1,7 +1,7 @@
 # aulas_sass
 Estudos sobre css e sass:
 
-- Eficiências de seletores
+- Eficiência de seletores
 - SMACSS
 - BEM
 - Mixins
