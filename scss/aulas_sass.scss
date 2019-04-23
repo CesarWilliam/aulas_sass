@@ -1,0 +1,13 @@
+// Pesos de seletores css - pesos são proridades em relação a algum conflito
+//
+// Do mais alto para o mais baixo:
+// - Estilos inline
+// - IDs
+// - Classes, pseudoclasses e atributos
+// - Elementos e pseudoelementos
+//
+// Exemplo de calculo de peso no css:
+// h1 => 0, 0, 0, 1 == 0001
+// #content h1 => 0, 1, 0, 1 == 0101
+//
+// Resultado == 101 > 1 
